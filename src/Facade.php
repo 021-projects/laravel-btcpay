@@ -2,12 +2,9 @@
 
 namespace Petzsch\LaravelBtcpay;
 
-use Illuminate\Support\Facades\Facade;
+use Illuminate\Support\Facades\Facade as BaseFacade;
 
-/**
- * Class LaravelBtcpayFacade.
- */
-class LaravelBtcpayFacade extends Facade
+class Facade extends BaseFacade
 {
     /**
      * @return string

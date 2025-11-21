@@ -5,16 +5,14 @@ namespace Petzsch\LaravelBtcpay;
 use Petzsch\LaravelBtcpay\Actions\ManageInvoices;
 use Petzsch\LaravelBtcpay\Traits\MakesHttpRequests;
 
-
-class LaravelBtcpay
+class BTCPay
 {
     use MakesHttpRequests;
     use ManageInvoices;
 
-
     protected $client;
-    private   $config;
 
+    private $config;
 
     /**
      * Setup client while creating the instance.

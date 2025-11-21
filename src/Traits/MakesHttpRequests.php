@@ -6,7 +6,6 @@ use BTCPayServer\Client\Invoice;
 use BTCPayServer\Exception\BTCPayException;
 use Petzsch\LaravelBtcpay\Exceptions\InvalidConfigurationException;
 
-
 trait MakesHttpRequests
 {
     /**
@@ -18,7 +17,10 @@ trait MakesHttpRequests
     public function setupClient()
     {
         $this->validateAndLoadConfig();
-        $this->client = new Invoice($this->config['server_url'], $this->config['api_key']);
+        $this->client = new Invoice(
+            $this->config['server_url'],
+            $this->config['api_key']
+        );
     }
 
     /**
@@ -30,7 +32,6 @@ trait MakesHttpRequests
     {
         $config = config('laravel-btcpay');
 
-        //$config = function_exists('config') && !empty(config('laravel-btcpay')) ? config('laravel-btcpay') : null;
         if (empty($config['api_key'])) {
             throw InvalidConfigurationException::emptyApiKey();
         }

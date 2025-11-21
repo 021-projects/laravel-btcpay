@@ -9,20 +9,27 @@ interface BtcPayConstants
     const DATETIME_FORMAT = 'Y-m-d\TH:i:s\Z';
 
     // Invoice Exceptions
-    const INVOICE_EXCEPTION_PAIDOVER    = 'paidOver';
+    const INVOICE_EXCEPTION_PAIDOVER = 'paidOver';
+
     const INVOICE_EXCEPTION_PAIDPARTIAL = 'paidPartial';
 
     // Subscription Schedules
-    const SUBSCRIPTION_SCHEDULE_WEEKLY    = 'weekly';
-    const SUBSCRIPTION_SCHEDULE_MONTHLY   = 'monthly';
+    const SUBSCRIPTION_SCHEDULE_WEEKLY = 'weekly';
+
+    const SUBSCRIPTION_SCHEDULE_MONTHLY = 'monthly';
+
     const SUBSCRIPTION_SCHEDULE_QUARTERLY = 'quarterly';
-    const SUBSCRIPTION_SCHEDULE_YEARLY    = 'yearly';
+
+    const SUBSCRIPTION_SCHEDULE_YEARLY = 'yearly';
 
     // Settlement Statuses
-    const SETTLEMENT_STATUS_NEW        = 'new';
+    const SETTLEMENT_STATUS_NEW = 'new';
+
     const SETTLEMENT_STATUS_PROCESSING = 'processing';
-    const SETTLEMENT_STATUS_REJECTED   = 'rejected';
-    const SETTLEMENT_STATUS_COMPLETED  = 'completed';
+
+    const SETTLEMENT_STATUS_REJECTED = 'rejected';
+
+    const SETTLEMENT_STATUS_COMPLETED = 'completed';
 
     // Invoice Webhook Codes
     const INVOICE_WEBHOOK_CODES = [

@@ -3,11 +3,10 @@
 namespace Petzsch\LaravelBtcpay;
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Petzsch\LaravelBtcpay\Http\Controllers\WebhookController;
 
-
-class LaravelBtcpayServiceProvider extends ServiceProvider
+class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -16,7 +15,9 @@ class LaravelBtcpayServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/laravel-btcpay.php' => config_path('laravel-btcpay.php'),
+                __DIR__.'/../config/laravel-btcpay.php' => config_path(
+                    'laravel-btcpay.php'
+                ),
             ], 'config');
         }
 
@@ -28,15 +29,20 @@ class LaravelBtcpayServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/laravel-btcpay.php', 'laravel-btcpay');
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/laravel-btcpay.php',
+            'laravel-btcpay'
+        );
     }
 
     protected function registerRoutes()
     {
-        Route::macro('btcPayWebhook',
+        Route::macro(
+            'btcPayWebhook',
             function (string $uri = 'laravel-btcpay/webhook') {
                 Route::post($uri, [WebhookController::class, 'handleWebhook'])
                     ->name('laravel-btcpay.webhook.capture');
-            });
+            }
+        );
     }
 }
