@@ -8,7 +8,7 @@ use Petzsch\LaravelBtcpay\Events\WebhookReceived;
 
 class WebhookController
 {
-    public function handleWebhook(Request $request)
+    public function handle(Request $request)
     {
         $payload = $request->all();
         $type = \Arr::get($payload, 'type');
