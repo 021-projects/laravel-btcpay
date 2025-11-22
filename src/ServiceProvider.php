@@ -2,9 +2,11 @@
 
 namespace Petzsch\LaravelBtcpay;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Petzsch\LaravelBtcpay\Http\Controllers\WebhookController;
+use Petzsch\LaravelBtcpay\Http\Middleware\ValidateWebhookSignature;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -15,13 +17,13 @@ class ServiceProvider extends BaseServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/laravel-btcpay.php' => config_path(
-                    'laravel-btcpay.php'
+                __DIR__.'/../config/btcpay.php' => config_path(
+                    'btcpay.php'
                 ),
             ], 'config');
         }
 
-        $this->registerRoutes();
+        $this->registerWebhookRoutes();
     }
 
     /**
@@ -29,20 +31,26 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(
-            __DIR__.'/../config/laravel-btcpay.php',
-            'laravel-btcpay'
-        );
+        $this->mergeConfigFrom(__DIR__.'/../config/btcpay.php', 'btcpay');
+        $this->registerClient();
     }
 
-    protected function registerRoutes()
+    protected function registerClient(): void
     {
-        Route::macro(
-            'btcPayWebhook',
-            function (string $uri = 'laravel-btcpay/webhook') {
-                Route::post($uri, [WebhookController::class, 'handleWebhook'])
-                    ->name('laravel-btcpay.webhook.capture');
-            }
-        );
+        $this->app->singleton(BTCPay::class, fn () => new BTCPay());
+        $this->app->alias(BTCPay::class, 'btcpay');
+    }
+
+    protected function registerWebhookRoutes(): void
+    {
+        $webhook = config('btcpay.webhook');
+        if (! Arr::get($webhook, 'routes')) {
+            return;
+        }
+
+        Route::post(
+            Arr::get($webhook, 'prefix', 'btcpay/webhook'),
+            [WebhookController::class, 'handleWebhook']
+        )->middleware(ValidateWebhookSignature::class);
     }
 }

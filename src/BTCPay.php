@@ -2,25 +2,30 @@
 
 namespace Petzsch\LaravelBtcpay;
 
-use Petzsch\LaravelBtcpay\Actions\ManageInvoices;
-use Petzsch\LaravelBtcpay\Traits\MakesHttpRequests;
+use BTCPayServer\Http\ClientInterface;
+use GuzzleHttp\Client;
+use Petzsch\LaravelBtcpay\Concerns\Shorthands;
+use Petzsch\LaravelBtcpay\Concerns\WithGreenfieldEndpoints;
+use Petzsch\LaravelBtcpay\BTCPayServer\Http\GuzzleClient;
 
 class BTCPay
 {
-    use MakesHttpRequests;
-    use ManageInvoices;
+    use WithGreenfieldEndpoints, Shorthands;
 
-    protected $client;
+    protected ClientInterface $client;
 
-    private $config;
-
-    /**
-     * Setup client while creating the instance.
-     *
-     * @throws Exceptions\InvalidConfigurationException
-     */
     public function __construct()
     {
-        $this->setupClient();
+        $this->client = new GuzzleClient(new Client);
+    }
+
+    protected function getBaseUrl(): string
+    {
+        return config('btcpay.server_url');
+    }
+
+    protected function getApiKey(): string
+    {
+        return config('btcpay.api_key');
     }
 }

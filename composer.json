@@ -29,8 +29,9 @@
       }
     ],
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "ext-json": "*",
+        "021/api-entity": "^2.1",
         "btcpayserver/btcpayserver-greenfield-php": "^2.0"
     },
     "require-dev": {
@@ -61,10 +62,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "ServiceProvider"
+                "Petzsch\\LaravelBtcpay\\ServiceProvider"
             ],
             "aliases": {
-                "LaravelBtcpay": "Facade"
+                "BTCPay": "Petzsch\\LaravelBtcpay\\Support\\BTCPay"
             }
         }
     }
