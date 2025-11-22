@@ -4,9 +4,9 @@ namespace Petzsch\LaravelBtcpay;
 
 use BTCPayServer\Http\ClientInterface;
 use GuzzleHttp\Client;
+use Petzsch\LaravelBtcpay\BTCPayServer\Http\GuzzleClient;
 use Petzsch\LaravelBtcpay\Concerns\Shorthands;
 use Petzsch\LaravelBtcpay\Concerns\WithGreenfieldEndpoints;
-use Petzsch\LaravelBtcpay\BTCPayServer\Http\GuzzleClient;
 
 class BTCPay
 {
