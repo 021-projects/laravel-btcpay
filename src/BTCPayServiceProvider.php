@@ -4,11 +4,11 @@ namespace Petzsch\LaravelBtcpay;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Illuminate\Support\ServiceProvider;
 use Petzsch\LaravelBtcpay\Http\Controllers\WebhookController;
 use Petzsch\LaravelBtcpay\Http\Middleware\ValidateWebhookSignature;
 
-class ServiceProvider extends BaseServiceProvider
+class BTCPayServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -23,7 +23,7 @@ class ServiceProvider extends BaseServiceProvider
             ], 'config');
         }
 
-        $this->registerWebhookRoutes();
+        $this->defineRoutes();
     }
 
     /**
@@ -32,19 +32,23 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__.'/../config/btcpay.php', 'btcpay');
+
         $this->registerClient();
     }
 
     protected function registerClient(): void
     {
-        $this->app->singleton(BTCPay::class, fn () => new BTCPay());
+        $this->app->singleton(BTCPay::class, fn () => new BTCPay);
         $this->app->alias(BTCPay::class, 'btcpay');
     }
 
-    protected function registerWebhookRoutes(): void
+    protected function defineRoutes(): void
     {
         $webhook = config('btcpay.webhook');
-        if (! Arr::get($webhook, 'routes')) {
+
+        if (app()->routesAreCached()
+            || Arr::get($webhook, 'routes') === false
+        ) {
             return;
         }
 

@@ -62,7 +62,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Petzsch\\LaravelBtcpay\\ServiceProvider"
+                "Petzsch\\LaravelBtcpay\\BTCPayServiceProvider"
             ],
             "aliases": {
                 "BTCPay": "Petzsch\\LaravelBtcpay\\Support\\BTCPay"
