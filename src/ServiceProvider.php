@@ -51,6 +51,6 @@ class ServiceProvider extends BaseServiceProvider
         Route::post(
             Arr::get($webhook, 'prefix', 'btcpay/webhook'),
             [WebhookController::class, 'handleWebhook']
-        )->middleware(ValidateWebhookSignature::class);
+        )->name('btcpay.webhook')->middleware(ValidateWebhookSignature::class);
     }
 }
