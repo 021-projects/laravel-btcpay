@@ -63,11 +63,9 @@ if (!function_exists('pcre_fnmatch')) {
 
 return ECSConfig::configure()
     ->withPaths([
-        __DIR__.'/app',
-        __DIR__.'/database',
-        __DIR__.'/routes',
-        __DIR__.'/operations',
-        __DIR__.'/packages',
+        __DIR__.'/config',
+        __DIR__.'/src',
+        __DIR__.'/tests',
     ])
     ->withPreparedSets(laravel: true)
     ->withConfiguredRule(LineLengthFixer::class, ['line_length' => 80]);
