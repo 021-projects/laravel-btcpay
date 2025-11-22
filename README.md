@@ -40,7 +40,7 @@ composer require petzsch/laravel-btcpay
 Publish config file with:
 
 ```bash
-php artisan vendor:publish --provider="Petzsch\LaravelBtcpay\ServiceProvider"
+php artisan vendor:publish --provider="Petzsch\LaravelBtcpay\BTCPayServiceProvider"
 ```
 
 This will create a `btcpay.php` file inside your **config** directory.
